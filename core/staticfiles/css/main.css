@@ -11,3 +11,13 @@
 h2 {
     text-align: center;
 }
+
+.task-item {
+    border-bottom: 1px solid #dfe3e6 !important;
+    margin-bottom: 8px;
+    padding-bottom: 8px;
+}
+.completed {
+    text-decoration: line-through;
+    color: #666666;
+}
