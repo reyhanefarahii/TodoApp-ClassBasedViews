@@ -1,6 +1,6 @@
 # Todo App
 
-This project is a Todo app built with Django using Class-Based Views.
+This project is a Todo app built with Django using ClassBasedViews.
 
 ### Features:
 
