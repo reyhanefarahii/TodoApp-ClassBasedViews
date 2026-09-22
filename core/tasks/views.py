@@ -8,6 +8,17 @@ class TaskView(ListView):
     template_name = 'tasks/task_list.html'
     ordering = ['-created_at']
 
+    def get_queryset(self):
+        queryset = Task.objects.all()
+        status = self.request.GET.get('status')
+
+        if status == 'completed':
+            queryset = queryset.filter(status=True)
+        elif status == 'active':
+            queryset = queryset.filter(status=False)
+
+        return queryset
+
 class TaskUpdate(UpdateView):
     model = Task
     fields = ['title']

@@ -44,19 +44,40 @@
 
               <div class="d-flex justify-content-end align-items-center mb-4 pt-2 pb-3">
                 <p class="small mb-0 me-2 text-muted">Filter</p>
-                <select data-mdb-select-init>
-                  <option value="1">All</option>
-                  <option value="2">Completed</option>
-                  <option value="3">Active</option>
-                  <option value="4">Has due date</option>
+                <select data-mdb-select-init id="task-filter">
+                  <option value="/">All</option>
+                  <option value="/?status=completed">Completed</option>
+                  <option value="/?status=active">Active</option>
                 </select>
-                <p class="small mb-0 ms-4 me-2 text-muted">Sort</p>
-                <select data-mdb-select-init>
-                  <option value="1">Added date</option>
-                  <option value="2">Due date</option>
-                </select>
-                <a href="#!" style="color: #23af89;" data-mdb-tooltip-init title="Ascending"><i
-                    class="fas fa-sort-amount-down-alt ms-2"></i></a>
+                <script>
+                  document.addEventListener('DOMContentLoaded', function () {
+
+                    const select = document.getElementById('task-filter');
+
+                    select.addEventListener('change', function () {
+                        window.location.href = this.value;
+                  });
+
+                  const status = new URLSearchParams(window.location.search).get('status');
+
+                    if (status === 'completed') {
+                        select.value = '/?status=completed';
+                    } 
+                    else if (status === 'active') {
+                        select.value = '/?status=active';
+                    } 
+                    else {
+                        select.value = '/';
+                  }
+
+                    // Update MDB Select UI
+                  const instance = mdb.Select.getInstance(select);
+
+                    if (instance) {
+                        instance.setValue(select.value);
+                    }
+                  });
+                </script>
               </div>
 
               {% for object in object_list %}
