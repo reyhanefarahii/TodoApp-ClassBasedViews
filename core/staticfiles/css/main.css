@@ -8,8 +8,31 @@
 #list1 .select-input.form-control[readonly]:not([disabled]) {
   background-color: #fbfbfb;
 }
-h2 {
-    text-align: center;
+.user-info {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 20px;
+}
+
+.user-info h6 {
+    color: #666666;
+    margin: 0;
+    font-size: 14px;
+}
+
+.logout-btn {
+    color: #666666;
+    border: none;
+    background: none;
+    padding: 0;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.logout-btn:hover {
+    color: #d31717;
 }
 
 .task-item {

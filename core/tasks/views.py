@@ -1,15 +1,17 @@
 from django.shortcuts import redirect, render
 from django.views.generic import ListView,UpdateView,DeleteView,CreateView
 from .models import Task
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 # Create your views here.
-class TaskView(ListView):
+class TaskView(LoginRequiredMixin,ListView):
+    login_url = "/login/"
     model = Task
     template_name = 'tasks/task_list.html'
     ordering = ['-created_at']
 
     def get_queryset(self):
-        queryset = Task.objects.all()
+        queryset = Task.objects.filter(user=self.request.user)
         status = self.request.GET.get('status')
 
         if status == 'completed':
@@ -19,18 +21,18 @@ class TaskView(ListView):
 
         return queryset
 
-class TaskUpdate(UpdateView):
+class TaskUpdate(LoginRequiredMixin,UpdateView):
     model = Task
     fields = ['title']
     template_name = 'tasks/task_form.html'
     success_url = "/"
 
-class TaskDelete(DeleteView):
+class TaskDelete(LoginRequiredMixin,DeleteView):
     model = Task
     success_url = "/"
     # template_name = "geeks/geeksmodel_confirm_delete.html"
 
-class TaskCreate(CreateView):
+class TaskCreate(LoginRequiredMixin,CreateView):
     model = Task
     fields = ['title']
     success_url = '/'
@@ -43,7 +45,7 @@ class TaskCreate(CreateView):
     def get(self, request, *args, **kwargs):
         return redirect('task-list')
 
-class TaskStatus(UpdateView):
+class TaskStatus(LoginRequiredMixin,UpdateView):
     model = Task
     fields = ['status']
     success_url = '/'
